@@ -10,18 +10,16 @@ class CustomerService(
 )  {
     fun getAll(name: String?): List<CustomerModel> {
         name?.let {
-            return customerRepository.findByName(it)
+            return customerRepository.findByNameContaining(it)
         }
         return customerRepository.findAll().toList()
     }
 
-    fun create(customer: CustomerModel) {
+    fun create(customer: CustomerModel) =
         customerRepository.save(customer)
-    }
 
-    fun getCustomer(id: Int): CustomerModel {
-        return customerRepository.findById(id).orElseThrow()
-    }
+    fun getById(id: Int): CustomerModel =
+        customerRepository.findById(id).orElseThrow()
 
     fun update(customer: CustomerModel) {
         if(!customerRepository.existsById(customer.id!!))
