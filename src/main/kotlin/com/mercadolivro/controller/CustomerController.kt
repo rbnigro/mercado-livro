@@ -1,7 +1,8 @@
-package com.mercadolivro.conrtoller
+package com.mercadolivro.controller
 
-import com.mercadolivro.conrtoller.request.PostCustomerRequest
-import com.mercadolivro.conrtoller.request.PutCustomerRequest
+import com.mercadolivro.controller.request.PostCustomerRequest
+import com.mercadolivro.controller.request.PutCustomerRequest
+import com.mercadolivro.extension.toCustomerModel
 import com.mercadolivro.model.CustomerModel
 import com.mercadolivro.service.CustomerService
 import org.springframework.http.HttpStatus
@@ -18,26 +19,26 @@ class CustomerController(
         return customerService.getAll(name)
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun create(@RequestBody customer: PostCustomerRequest) {
+        customerService.create(customer.toCustomerModel())
+    }
+
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: String): CustomerModel {
+    fun getCustomer(@PathVariable id: Int): CustomerModel {
         return customerService.getCustomer(id)
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun updateCustomer(@PathVariable id: String, @RequestBody customer: PutCustomerRequest) {
-        customerService.updateCustomer(id, customer)
+    fun update(@PathVariable id: Int, @RequestBody customer: PutCustomerRequest) {
+        customerService.update(customer.toCustomerModel(id))
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteCustomer(@PathVariable id: String) {
+    fun delete(@PathVariable id: Int) {
         customerService.deleteCustomer(id)
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody customer: PostCustomerRequest) {
-        customerService.create(customer)
     }
 }
