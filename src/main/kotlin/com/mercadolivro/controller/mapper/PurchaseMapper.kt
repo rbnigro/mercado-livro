@@ -17,7 +17,7 @@ class PurchaseMapper(
 
         return PurchaseModel(
             customerModel = customer,
-            books = books,
+            books = books.toMutableList(),
             price = books.sumOf { it.price }
         )
     }
