@@ -11,48 +11,53 @@ import com.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.model.BookModel
 import com.mercadolivro.model.CustomerModel
 
-fun PostCustomerRequest.toCustomerModel(): CustomerModel {
-    return CustomerModel(name = this.name, email = this.email, status = CustomerStatus.ATIVO)
-}
+fun PostCustomerRequest.toCustomerModel(): CustomerModel =
+    CustomerModel(
+        name = this.name,
+        email = this.email,
+        status = CustomerStatus.ATIVO,
+        password = this.password
+    )
 
-fun PutCustomerRequest.toCustomerModel(previousValue: CustomerModel): CustomerModel {
-    return CustomerModel(id = previousValue.id, name = this.name, email = this.email, status = previousValue.status)
-}
+fun PutCustomerRequest.toCustomerModel(previousValue: CustomerModel): CustomerModel =
+    CustomerModel(
+        id = previousValue.id,
+        name = this.name,
+        email = this.email,
+        status = previousValue.status,
+        password = previousValue.password
+    )
 
-fun PostBookRequest.toBookModel(customerModel: CustomerModel): BookModel {
-    return  BookModel(
+fun PostBookRequest.toBookModel(customerModel: CustomerModel): BookModel =
+    BookModel(
         name = this.name,
         price = this.price,
         status = BookStatus.ATIVO,
         customer = customerModel
     )
-}
 
-fun PutBookRequest.toBookModel(previousValue: BookModel): BookModel {
-    return BookModel(
+fun PutBookRequest.toBookModel(previousValue: BookModel): BookModel =
+    BookModel(
         id = previousValue.id,
         name = this.name ?: previousValue.name,
         price = this.price ?: previousValue.price,
         status = previousValue.status,
         customer = previousValue.customer
     )
-}
 
-fun CustomerModel.toResponse(): CustomerResponse {
-    return CustomerResponse(
+fun CustomerModel.toResponse(): CustomerResponse =
+    CustomerResponse(
         id = this.id,
         name = this.name,
         email = this.email,
         status = this.status
     )
-}
 
-fun BookModel.toResponse(): BookResponse {
-    return BookResponse(
+fun BookModel.toResponse(): BookResponse =
+    BookResponse(
         id = this.id,
         name = this.name,
         price = this.price,
         customer = this.customer,
         status = this.status
     )
-}

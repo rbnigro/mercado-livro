@@ -12,4 +12,6 @@ class MercadoLivroApplication
 
 fun main(args: Array<String>) {
 	runApplication<MercadoLivroApplication>(*args)
+
+	// todo Rever aula 74
 }
