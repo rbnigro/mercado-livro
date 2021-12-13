@@ -1,7 +1,9 @@
 package com.mercadolivro.config
 
+import com.mercadolivro.enums.Role
 import com.mercadolivro.repository.CustomerRepository
 import com.mercadolivro.security.AuthenticationFilter
+import com.mercadolivro.security.AutorizationFilter
 import com.mercadolivro.security.JwtUtil
 import com.mercadolivro.service.UserDetailsCustomService
 import org.springframework.context.annotation.Bean
@@ -23,7 +25,11 @@ class SecurityConfig(
 ): WebSecurityConfigurerAdapter() {
     private val PUBLIC_MATCHERS = arrayOf<String>()
     private val PUBLIC_POST_MATCHES = arrayOf(
-        "/customer/"
+        "/customer"
+    )
+
+    private val ADMIN_MATCHERS = arrayOf(
+        "/admin/**"
     )
 
     override fun configure(auth: AuthenticationManagerBuilder) {
@@ -34,8 +40,10 @@ class SecurityConfig(
         http.authorizeHttpRequests()
             .antMatchers(*PUBLIC_MATCHERS).permitAll()
             .antMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHES).permitAll()    // endpoint nao autenticado
+            .antMatchers(*ADMIN_MATCHERS).hasAnyAuthority(Role.ADMIN.description)
             .anyRequest().authenticated() // requer endpoint autenticado
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
+        http.addFilter(AutorizationFilter(authenticationManager(), userDetails, jwtUtil))
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // requisições independentes
     }
 
