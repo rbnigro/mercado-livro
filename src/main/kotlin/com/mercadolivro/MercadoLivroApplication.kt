@@ -13,5 +13,7 @@ class MercadoLivroApplication
 fun main(args: Array<String>) {
 	runApplication<MercadoLivroApplication>(*args)
 
+	// Projeto iniciado em 01/12/2021
+
 	// TODO Rever aula 74
 }
