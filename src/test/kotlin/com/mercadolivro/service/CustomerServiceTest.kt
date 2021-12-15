@@ -2,9 +2,8 @@ package com.mercadolivro.service
 
 import com.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.enums.Errors
-import com.mercadolivro.enums.Role
 import com.mercadolivro.exception.NotFoundException
-import com.mercadolivro.model.CustomerModel
+import com.mercadolivro.helper.buildCustomer
 import com.mercadolivro.repository.CustomerRepository
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -174,7 +173,7 @@ class CustomerServiceTest {
 
     @Test
     fun `should return true when email avaliable`(){
-        val email = "${Random().nextInt().toString()}@email.com"
+        val email = "${Random().nextInt()}@email.com"
 
         every { customerRepository.existsByEmail(email) } returns false
 
@@ -192,18 +191,4 @@ class CustomerServiceTest {
         verify ( exactly = 1 ) { customerRepository.existsByEmail(email) }
     }
 
-    fun buildCustomer(
-        id: Int? = null,
-        name: String = "Customer name",
-        email: String = "${UUID.randomUUID()}@email.com", // unique
-        password: String = "password"
-    ) = CustomerModel(
-        id = id,
-        name = name,
-        email = email,
-        status = CustomerStatus.ATIVO,
-        password = password,
-        roles = setOf(Role.CUSTOMER)
-
-    )
 }
