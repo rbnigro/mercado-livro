@@ -37,9 +37,11 @@ class CustomerService(
 
     fun update(customer: CustomerModel) {
         if(!customerRepository.existsById(customer.id!!))
-            throw Exception()
+            throw NotFoundException(Errors.ML201.Message.format(customer.id), Errors.ML201.code)
 
         customerRepository.save(customer)
+
+        // técnica para mokar - pegue os eventos do repository
     }
 
     fun deleteCustomer(id: Int) {
