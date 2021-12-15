@@ -40,4 +40,13 @@ class PurchaseServiceTest {
 
         assertEquals(purchase, purchaseEventSlot.captured.purchaseModel)
     }
+
+    @Test
+    fun `should update purchase`() {
+        val purchase = buildPurchase()
+
+        every { purchaseRepository.save(purchase) } returns purchase
+
+        purchaseService.update(purchase)
+    }
 }
