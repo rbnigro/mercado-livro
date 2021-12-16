@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("customers")
+@RequestMapping("/customers")
 class CustomerController(
     private val customerService: CustomerService
 ) {

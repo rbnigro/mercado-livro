@@ -20,7 +20,7 @@ fun buildCustomer(
     email = email,
     status = CustomerStatus.ATIVO,
     password = password,
-    roles = setOf(Role.CUSTOMER)
+    roles = setOf(Role.ADMIN)
 )
 
 fun buildPurchase(
