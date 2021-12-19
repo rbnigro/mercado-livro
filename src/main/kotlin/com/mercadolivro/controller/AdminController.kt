@@ -10,5 +10,5 @@ class AdminController() {
 
     @GetMapping("/reports")
     fun report(): String =
-        "This is a Reposrt. Only Admin can see it!"
+        "This is a Report. Only Admin can see it!"
 }
