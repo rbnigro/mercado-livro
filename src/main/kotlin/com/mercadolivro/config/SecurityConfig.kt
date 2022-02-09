@@ -21,8 +21,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
+import org.springframework.web.servlet.config.annotation.EnableWebMvc
 
 @Configuration
+@EnableWebMvc
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig(
@@ -54,7 +56,17 @@ class SecurityConfig(
     }
 
     override fun configure(web: WebSecurity) {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**")
+        web.ignoring()
+            .antMatchers(
+                "/v2/api-docs",
+                "/v3/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui/**",
+                "/webjars/**",
+                "/csrf/**"
+            )
     }
 
     @Bean
